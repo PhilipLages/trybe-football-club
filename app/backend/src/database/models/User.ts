@@ -17,25 +17,25 @@ User.init({
     autoIncrement: true,
   },
   username: {
-    type: STRING(30),
+    type: STRING(55),
     allowNull: false,
   },
   role: {
-    type: STRING(30),
+    type: STRING(55),
     allowNull: false,
   },
   email: {
-    type: STRING(30),
+    type: STRING(55),
     allowNull: false,
   },
   password: {
-    type: STRING(30),
+    type: STRING(55),
     allowNull: false,
   },
 }, {
   underscored: true,
   sequelize: db,
-  tableName: 'users',
+  modelName: 'users',
   timestamps: false,
 });
 

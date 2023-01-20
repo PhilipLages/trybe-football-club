@@ -10,9 +10,9 @@ module.exports = {
         autoIncrement: true,
       },
       team_name: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         allowNull: false,
-      },
+      }
     });
   },
   down: async (queryInterface) => {
