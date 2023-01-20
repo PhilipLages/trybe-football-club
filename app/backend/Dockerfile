@@ -5,6 +5,6 @@ COPY . /app-backend/
 
 EXPOSE 3001
 
-RUN npm i
+RUN npm install
 
 ENTRYPOINT [ "npm", "run", "dev" ]
