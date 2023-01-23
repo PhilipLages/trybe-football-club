@@ -4,28 +4,24 @@ import * as jwt from 'jsonwebtoken';
 import User from '../../database/models/User';
 import httpStatus from '../../utils/httpStatus';
 import { config, secret } from '../../utils/jwt';
-import ReturnProps from '../interfaces/returnProps';
+import LoginReturnProps from '../interfaces/loginReturnProps';
 import { LoginProps } from '../interfaces/userProps';
 
-const { ok, invalid, notFound } = httpStatus;
+const { ok, invalid } = httpStatus;
 
 export default class UserService {
-  public model;
+  private _model;
 
   constructor() {
-    this.model = User;
+    this._model = User;
   }
 
-  public login = async ({ email, password }: LoginProps): Promise<ReturnProps> => {
-    const user = await this.model.findOne({ where: { email } });
+  public logIn = async ({ email, password }: LoginProps): Promise<LoginReturnProps> => {
+    const user = await this._model.findOne({ where: { email } });
 
-    if (!user) {
-      return { status: notFound, data: { message: 'User not found' } };
-    }
+    const isPasswordValid = user && compareSync(password, user?.password);
 
-    const isPasswordValid = compareSync(password, user?.password);
-
-    if (!isPasswordValid) {
+    if (!isPasswordValid || !user) {
       return { status: invalid, data: { message: 'Incorrect email or password' } };
     }
 

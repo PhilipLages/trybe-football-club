@@ -1,4 +1,4 @@
-export default interface ReturnProps {
+export default interface LoginReturnProps {
   status: number;
   data: {
     message?: string;
