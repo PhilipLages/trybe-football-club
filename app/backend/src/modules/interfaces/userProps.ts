@@ -4,6 +4,7 @@ export interface LoginProps {
 }
 
 export interface UserProps extends LoginProps {
+  id?: number;
   username: string;
   role: string;
 }
