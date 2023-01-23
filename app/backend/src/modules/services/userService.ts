@@ -2,8 +2,10 @@ import { compareSync } from 'bcryptjs';
 import * as jwt from 'jsonwebtoken';
 
 import User from '../../database/models/User';
+
 import httpStatus from '../../utils/httpStatus';
 import { config, secret } from '../../utils/jwt';
+
 import LoginReturnProps from '../interfaces/loginReturnProps';
 import { LoginProps } from '../interfaces/userProps';
 

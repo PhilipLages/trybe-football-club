@@ -16,12 +16,8 @@ export default class UserMiddleware {
     try {
       const { error } = this._joiSchema.validate(login);
 
-      const status = error?.details[0].type === 'any.required'
-        ? httpStatus.required
-        : httpStatus.unproc;
-
       return error
-        ? res.status(status).json({ message: error.details[0].message })
+        ? res.status(httpStatus.required).json({ message: error.details[0].message })
         : next();
     } catch (error) {
       const { message } = error as ErrorProps;
