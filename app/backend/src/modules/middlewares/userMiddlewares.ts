@@ -40,7 +40,6 @@ export default class UserMiddleware {
 
     try {
       const payload = jwt.verify(token, secret);
-      console.log(payload);
 
       req.body.user = payload;
 
