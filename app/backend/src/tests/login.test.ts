@@ -1,6 +1,7 @@
 import * as sinon from 'sinon';
 import * as chai from 'chai';
 import * as jwt from 'jsonwebtoken';
+import * as bcrypt from 'bcryptjs';
 // @ts-ignore
 import chaiHttp = require('chai-http');
 
@@ -37,6 +38,7 @@ describe('tests for route /login', () => {
 
   it('should return error if password is incorrect', async () => {
     sinon.stub(User, 'findOne').resolves(userMock as any);
+    sinon.stub(bcrypt, 'compare').resolves(false);
 
     const response = await chai.request(app).post('/login').send(incorrectPasswordMock);
 

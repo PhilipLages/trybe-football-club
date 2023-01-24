@@ -15,6 +15,9 @@ class App {
 
     // Não remover essa rota
     this.app.get('/', (req, res) => res.json({ ok: true }));
+    this.app.use('/matches', matchRouter);
+    this.app.use('/login', userRouter);
+    this.app.use('/teams', teamRouter);
   }
 
   private config():void {
@@ -28,10 +31,6 @@ class App {
     this.app.use(cors());
     this.app.use(express.json());
     this.app.use(accessControl);
-
-    this.app.use('/login', userRouter);
-    this.app.use('/teams', teamRouter);
-    this.app.use('/matches', matchRouter);
   }
 
   public start(PORT: string | number):void {

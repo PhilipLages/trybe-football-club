@@ -1,6 +1,7 @@
 import { RequestHandler } from 'express';
 import httpStatus from '../../utils/httpStatus';
 import ErrorProps from '../interfaces/errorProps';
+import IQuery from '../interfaces/query';
 import MatchService from '../services/matchService';
 
 export default class MatchController {
@@ -10,9 +11,11 @@ export default class MatchController {
     this._service = new MatchService();
   }
 
-  public getAll: RequestHandler = async (_req, res) => {
+  public getAll: RequestHandler = async (req, res) => {
+    const { inProgress } = req.query as unknown as IQuery;
+
     try {
-      const { status, data } = await this._service.getAll();
+      const { status, data } = await this._service.getAll(inProgress);
 
       return res.status(status).json(data);
     } catch (error) {

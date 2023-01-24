@@ -12,8 +12,11 @@ export default class MatchService {
     this._model = Match;
   }
 
-  public getAll = async (): Promise<AllMatches> => {
+  public getAll = async (query: string): Promise<AllMatches> => {
+    const where = query ? { inProgress: query === 'true' } : undefined;
+
     const data = await this._model.findAll({
+      where,
       include: [
         {
           model: Team,
