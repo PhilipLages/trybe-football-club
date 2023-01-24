@@ -10,6 +10,8 @@ const middleware = new UserMiddleware(loginSchema);
 
 matchRouter.patch('/:id/finish', matchController.finishMatch);
 
+matchRouter.patch('/:id', matchController.updateMatch);
+
 matchRouter.get('/', matchController.getAll);
 
 matchRouter.use(middleware.validateAuth);

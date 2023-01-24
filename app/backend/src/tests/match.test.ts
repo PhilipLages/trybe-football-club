@@ -6,7 +6,9 @@ import chaiHttp = require('chai-http');
 import { app } from '../app';
 import matchesMock from './mocks/matchMocks';
 import Match from '../database/models/Match';
-import matchesInProgressMock from './mocks/matchesInProgress';
+import { newMatchMock, newMatchRequest } from './mocks/newMatchMock';
+import User from '../database/models/User';
+import { loginMock, userMock } from './mocks/userMock';
 
 chai.use(chaiHttp);
 
@@ -24,12 +26,15 @@ describe('tests for route /matches', () => {
     expect(response.body).to.be.deep.equal(matchesMock);
   });
 
-  // it('should get all matches with inProgress equals true', async () => {
-  //   sinon.stub(Match, 'findAll').resolves(matchesInProgressMock as any);
-    
-  //   const response = await chai.request(app).get('/matches').query('inProgress=true');
+  it('should create a new match', async () => {
+    sinon.stub(Match, 'create').resolves(newMatchMock as any);
+    sinon.stub(User, 'findOne').resolves(userMock as any);
 
-  //   expect(response.status).to.be.equal(200);
-  //   expect(response.body).to.be.deep.equal(matchesInProgressMock);
-  // });
+    await chai.request(app).post('/login').send(loginMock);
+    
+    const response = await chai.request(app).post('/matches').send(newMatchRequest);
+
+    expect(response.status).to.be.equal(201);
+    expect(response.body).to.be.deep.equal(newMatchMock);
+  });
 });

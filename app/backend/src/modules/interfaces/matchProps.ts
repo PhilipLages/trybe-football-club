@@ -19,3 +19,8 @@ export interface INewMatch {
 export interface IFInishMatch extends IStatus {
   data: { message: string }
 }
+
+export interface IUpdateMatch {
+  homeTeamGoals: number,
+  awayTeamGoals: number
+}

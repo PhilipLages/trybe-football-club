@@ -1,7 +1,14 @@
 import httpStatus from '../../utils/httpStatus';
 import Match from '../../database/models/Match';
 import Team from '../../database/models/Team';
-import { AllMatches, IFInishMatch, IMatch, INewMatch } from '../interfaces/matchProps';
+import {
+  AllMatches,
+  IFInishMatch,
+  IMatch,
+  INewMatch,
+  IUpdateMatch,
+} from '../interfaces/matchProps';
+import IStatus from '../interfaces/statusProps';
 
 const { ok, created, unproc, notFound } = httpStatus;
 
@@ -68,5 +75,18 @@ export default class MatchService {
     );
 
     return { status: ok, data: { message: 'Finished' } };
+  };
+
+  public updateMatch = async (id: number, updateMatch: IUpdateMatch): Promise<IStatus> => {
+    await this._model.update(
+      {
+        homeTeamGoals: updateMatch.homeTeamGoals,
+        awayTeamGoals: updateMatch.awayTeamGoals,
+      },
+      { where: { id },
+      },
+    );
+
+    return { status: ok };
   };
 }
