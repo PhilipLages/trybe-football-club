@@ -1,6 +1,4 @@
-interface IStatus {
-  status: number;
-}
+import IStatus from './statusProps';
 
 export interface GetTeamsProps extends IStatus {
   data: Array<{
