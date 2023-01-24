@@ -1,4 +1,5 @@
 import { RequestHandler } from 'express';
+
 import httpStatus from '../../utils/httpStatus';
 import ErrorProps from '../interfaces/errorProps';
 import IQuery from '../interfaces/query';
@@ -23,5 +24,13 @@ export default class MatchController {
       const { message } = error as ErrorProps;
       return res.status(httpStatus.serverError).json({ message });
     }
+  };
+
+  public create: RequestHandler = async (req, res) => {
+    const newMatch = req.body;
+
+    const { status, data } = await this._service.create(newMatch);
+
+    return res.status(status).json(data);
   };
 }

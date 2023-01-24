@@ -1,9 +1,9 @@
 import httpStatus from '../../utils/httpStatus';
 import Match from '../../database/models/Match';
 import Team from '../../database/models/Team';
-import { AllMatches } from '../interfaces/matchProps';
+import { AllMatches, IMatch, INewMatch } from '../interfaces/matchProps';
 
-const { ok } = httpStatus;
+const { ok, created } = httpStatus;
 
 export default class MatchService {
   private _model;
@@ -32,5 +32,11 @@ export default class MatchService {
     });
 
     return { status: ok, data };
+  };
+
+  public create = async (newMatch: INewMatch): Promise<IMatch> => {
+    const data = await this._model.create({ ...newMatch, inProgress: true });
+
+    return { status: created, data };
   };
 }
