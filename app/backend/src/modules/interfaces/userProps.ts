@@ -6,5 +6,13 @@ export interface LoginProps {
 export interface UserProps extends LoginProps {
   id?: number;
   username: string;
-  role: string;
+  role?: string;
+}
+
+export interface GetUserProps {
+  status: number,
+  data: {
+    message?: string;
+    role?: string,
+  }
 }

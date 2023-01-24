@@ -20,6 +20,24 @@ export default class UserController {
 
       return res.status(status).json(data);
     } catch (error) {
+      console.log(error);
+
+      const { message } = error as ErrorProps;
+
+      return res.status(serverError).json({ message });
+    }
+  };
+
+  public getUser: RequestHandler = async (req, res) => {
+    const { user } = req.body;
+
+    try {
+      const { status, data } = await this._service.getUser(user);
+
+      return res.status(status).json(data);
+    } catch (error) {
+      console.log(error);
+
       const { message } = error as ErrorProps;
 
       return res.status(serverError).json({ message });

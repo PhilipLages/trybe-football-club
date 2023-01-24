@@ -1,4 +1,5 @@
 import * as express from 'express';
+import * as cors from 'cors';
 import userRouter from './router/userRouter';
 
 class App {
@@ -21,6 +22,7 @@ class App {
       next();
     };
 
+    this.app.use(cors());
     this.app.use(express.json());
     this.app.use(accessControl);
 

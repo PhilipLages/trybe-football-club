@@ -11,4 +11,8 @@ const userMiddleware = new UserMiddleware(loginSchema);
 
 userRouter.post('/', userMiddleware.validateLogin, userController.logIn);
 
+userRouter.use(userMiddleware.validateAuth);
+
+userRouter.get('/validate', userController.getUser);
+
 export default userRouter;

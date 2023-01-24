@@ -7,7 +7,7 @@ import httpStatus from '../../utils/httpStatus';
 import { config, secret } from '../../utils/jwt';
 
 import LoginReturnProps from '../interfaces/loginReturnProps';
-import { LoginProps } from '../interfaces/userProps';
+import { GetUserProps, LoginProps, UserProps } from '../interfaces/userProps';
 
 const { ok, invalid } = httpStatus;
 
@@ -32,5 +32,15 @@ export default class UserService {
     const token = jwt.sign(data, secret, config);
 
     return { status: ok, data: { token } };
+  };
+
+  public getUser = async ({ username }: UserProps): Promise<GetUserProps> => {
+    const user = await this._model.findOne({ where: { username } });
+
+    if (!user) {
+      return { status: invalid, data: { message: 'User not found' } };
+    }
+
+    return { status: ok, data: { role: user.role } };
   };
 }
