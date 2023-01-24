@@ -39,9 +39,10 @@ export default class UserMiddleware {
     const token = authorization.replace('Bearer', '').trim();
 
     try {
-      const data = jwt.verify(token, secret);
+      const payload = jwt.verify(token, secret);
+      console.log(payload);
 
-      req.body.user = data;
+      req.body.user = payload;
 
       return next();
     } catch (error) {

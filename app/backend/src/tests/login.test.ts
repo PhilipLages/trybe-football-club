@@ -1,11 +1,19 @@
 import * as sinon from 'sinon';
 import * as chai from 'chai';
+import * as jwt from 'jsonwebtoken';
 // @ts-ignore
 import chaiHttp = require('chai-http');
 
 import { app } from '../app';
 import User from '../database/models/User';
-import { incorrectPasswordMock, loginMock, noEmailMock, userMock,  } from './mocks/userMock';
+import { 
+  incorrectPasswordMock, 
+  loginMock, 
+  noEmailMock, 
+  userMock,  
+} from './mocks/userMock';
+import { secret } from '../utils/jwt';
+import JwtTokenProps from '../modules/interfaces/jwtTokenProps'
 
 chai.use(chaiHttp);
 
@@ -18,9 +26,13 @@ describe('tests for route /login', () => {
     sinon.stub(User, 'findOne').resolves(userMock as any);
 
     const response = await chai.request(app).post('/login').send(loginMock);
+    const token = response.body.token;
+
+    const validToken = jwt.verify(token, secret) as JwtTokenProps;
 
     expect(response.status).to.be.equal(200);
     expect(response.body).to.have.property('token');
+    expect(validToken.username).to.be.equal('Admin');
   });
 
   it('should return error if password is incorrect', async () => {
