@@ -8,6 +8,8 @@ const matchRouter = express.Router();
 const matchController = new MatchController();
 const middleware = new UserMiddleware(loginSchema);
 
+matchRouter.patch('/:id/finish', matchController.finishMatch);
+
 matchRouter.get('/', matchController.getAll);
 
 matchRouter.use(middleware.validateAuth);

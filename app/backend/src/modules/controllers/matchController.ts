@@ -33,4 +33,12 @@ export default class MatchController {
 
     return res.status(status).json(data);
   };
+
+  public finishMatch: RequestHandler = async (req, res) => {
+    const { id } = req.params;
+
+    const { status, data } = await this._service.finishMatch(Number(id));
+
+    return res.status(status).json(data);
+  };
 }

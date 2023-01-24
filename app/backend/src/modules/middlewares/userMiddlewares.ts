@@ -47,7 +47,7 @@ export default class UserMiddleware {
     } catch (error) {
       console.log(error);
 
-      return res.status(httpStatus.invalid).json({ message: 'Invalid token' });
+      return res.status(httpStatus.invalid).json({ message: 'Token must be a valid token' });
     }
   };
 }

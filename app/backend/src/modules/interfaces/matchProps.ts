@@ -6,7 +6,7 @@ export interface AllMatches extends IStatus {
 }
 
 export interface IMatch extends IStatus {
-  data: Match;
+  data: Match | { message?: string };
 }
 
 export interface INewMatch {
@@ -14,4 +14,8 @@ export interface INewMatch {
   awayTeamId: number,
   homeTeamGoals: number,
   awayTeamGoals: number,
+}
+
+export interface IFInishMatch extends IStatus {
+  data: { message: string }
 }
