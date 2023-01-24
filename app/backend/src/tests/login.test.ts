@@ -5,7 +5,7 @@ import chaiHttp = require('chai-http');
 
 import { app } from '../app';
 import User from '../database/models/User';
-import { incorrectPasswordMock, loginMock, noEmailMock, userMock,  } from './mocks/loginMock';
+import { incorrectPasswordMock, loginMock, noEmailMock, userMock,  } from './mocks/userMock';
 
 chai.use(chaiHttp);
 
