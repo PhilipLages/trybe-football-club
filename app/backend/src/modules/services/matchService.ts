@@ -8,7 +8,6 @@ import {
   INewMatch,
   IUpdateMatch,
 } from '../interfaces/matchProps';
-import IStatus from '../interfaces/statusProps';
 
 const { ok, created, unproc, notFound } = httpStatus;
 
@@ -77,7 +76,7 @@ export default class MatchService {
     return { status: ok, data: { message: 'Finished' } };
   };
 
-  public updateMatch = async (id: number, updateMatch: IUpdateMatch): Promise<IStatus> => {
+  public updateMatch = async (id: number, updateMatch: IUpdateMatch): Promise<IMatch> => {
     await this._model.update(
       {
         homeTeamGoals: updateMatch.homeTeamGoals,
@@ -87,6 +86,6 @@ export default class MatchService {
       },
     );
 
-    return { status: ok };
+    return { status: ok, data: { message: 'Match updated' } };
   };
 }

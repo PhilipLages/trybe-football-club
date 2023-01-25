@@ -46,8 +46,8 @@ export default class MatchController {
     const { id } = req.params;
     const updateMatch = req.body;
 
-    const { status } = await this._service.updateMatch(Number(id), updateMatch);
+    const { status, data } = await this._service.updateMatch(Number(id), updateMatch);
 
-    return res.status(status).end();
+    return res.status(status).json(data);
   };
 }
