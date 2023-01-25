@@ -48,6 +48,6 @@ export default class MatchController {
 
     const { status } = await this._service.updateMatch(Number(id), updateMatch);
 
-    return res.status(status);
+    return res.status(status).end();
   };
 }
