@@ -1,8 +1,10 @@
+import createFullLeaderboard from '../../utils/fullLeaderboard';
 import Leaderboard from '../../utils/Leaderboard';
 import Match from '../../database/models/Match';
 import Team from '../../database/models/Team';
 import httpStatus from '../../utils/httpStatus';
 import { IMatchesByTeam } from '../interfaces/matchProps';
+import ILeaderboard from '../interfaces/leaderboard';
 
 const { ok } = httpStatus;
 
@@ -49,6 +51,15 @@ export default class LeaderboardService {
     const leaderboard = new Leaderboard(matches, 'away');
 
     const data = leaderboard.createLeaderboard();
+
+    return { status: ok, data };
+  };
+
+  public getFullLeaderboard = async () => {
+    const homeLeaderboard = this.getHomeLeaderboard() as unknown as ILeaderboard[];
+    const awayLeaderboard = this.getAwayLeaderboard() as unknown as ILeaderboard[];
+
+    const data = createFullLeaderboard(homeLeaderboard, awayLeaderboard);
 
     return { status: ok, data };
   };
