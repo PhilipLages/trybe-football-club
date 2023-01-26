@@ -84,37 +84,35 @@ export default class Leaderboard {
   };
 
   private getBalance = (match: IMatchesByTeam) => {
-    const goalsFavor = this.getGoalsFavor(match);
-    const goalsOwn = this.getGoalsOwn(match);
+    const goalsFavor = this.getGoalsFavor(match) as number;
+    const goalsOwn = this.getGoalsOwn(match) as number;
 
-    if (!goalsFavor || !goalsOwn) return undefined;
-
-    return goalsFavor - goalsOwn;
+    return (goalsFavor - goalsOwn);
   };
 
-  private getEfficiency = (game: IMatchesByTeam) => {
-    const points = this.getPoints(game);
-    const games = this.getGames(game);
-
-    if (!points || !games) return undefined;
+  private getEfficiency = (match: IMatchesByTeam) => {
+    const points = this.getPoints(match) as number;
+    const games = this.getGames(match) as number;
 
     const efficiency = ((points / (games * 3)) * 100).toFixed(2);
 
     return efficiency;
   };
 
-  public createLeaderboard = () => this._matches.map((match) => (
-    {
-      name: match.teamName,
-      totalPoints: this.getPoints(match),
-      totalGames: this.getGames(match),
-      totalVictories: this.getVictories(match),
-      totalDraws: this.getDraws(match),
-      totalLosses: this.getLosses(match),
-      goalsFavor: this.getGoalsFavor(match),
-      goalsOwn: this.getGoalsOwn(match),
-      goalsBalance: this.getBalance(match),
-      efficiency: this.getEfficiency(match),
-    }
-  ));
+  public createLeaderboard = () => this._matches.map((match) => ({
+    name: match.teamName,
+    totalPoints: this.getPoints(match) as unknown as number,
+    totalGames: this.getGames(match) as unknown as number,
+    totalVictories: this.getVictories(match) as unknown as number,
+    totalDraws: this.getDraws(match) as unknown as number,
+    totalLosses: this.getLosses(match) as unknown as number,
+    goalsFavor: this.getGoalsFavor(match) as unknown as number,
+    goalsOwn: this.getGoalsOwn(match) as unknown as number,
+    goalsBalance: this.getBalance(match) as unknown as number,
+    efficiency: this.getEfficiency(match) as unknown as string,
+  })).sort((a, b) => b.totalPoints - a.totalPoints
+  || b.totalVictories - a.totalVictories
+  || b.goalsBalance - a.goalsBalance
+  || b.goalsFavor - a.goalsFavor
+  || b.goalsOwn - a.goalsOwn);
 }

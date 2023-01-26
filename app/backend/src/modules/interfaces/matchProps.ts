@@ -27,7 +27,13 @@ export interface IUpdateMatch {
 
 export interface IMatchesByTeam {
   id?: number;
-  teamName?: string;
-  homeMatches: INewMatch[];
-  awayMatches: INewMatch[];
+  teamName: string;
+  homeMatches: {
+    homeTeamGoals: number,
+    awayTeamGoals: number,
+  }[]
+  awayMatches: {
+    homeTeamGoals: number,
+    awayTeamGoals: number,
+  }[]
 }
