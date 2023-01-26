@@ -9,7 +9,7 @@ import { config, secret } from '../../utils/jwt';
 import LoginReturnProps from '../interfaces/loginReturnProps';
 import { GetUserProps, LoginProps, UserProps } from '../interfaces/userProps';
 
-const { ok, invalid } = httpStatus;
+const { ok, invalid, notFound } = httpStatus;
 
 export default class UserService {
   private _model;
@@ -38,7 +38,7 @@ export default class UserService {
     const user = await this._model.findOne({ where: { username } });
 
     if (!user) {
-      return { status: invalid, data: { message: 'User not found' } };
+      return { status: notFound, data: { message: 'User not found' } };
     }
 
     return { status: ok, data: { role: user.role } };

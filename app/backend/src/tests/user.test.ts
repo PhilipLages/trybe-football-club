@@ -1,7 +1,6 @@
 import * as sinon from 'sinon';
 import * as chai from 'chai';
 import * as jwt from 'jsonwebtoken';
-import * as bcrypt from 'bcryptjs';
 // @ts-ignore
 import chaiHttp = require('chai-http');
 
@@ -10,11 +9,10 @@ import User from '../database/models/User';
 import { 
   incorrectPasswordMock, 
   loginMock, 
-  noEmailMock, 
+  tokenMock, 
   userMock,  
 } from './mocks/userMock';
 import { secret } from '../utils/jwt';
-import JwtTokenProps from '../modules/interfaces/jwtTokenProps'
 
 chai.use(chaiHttp);
 
@@ -29,7 +27,7 @@ describe('tests for route /login', () => {
     const response = await chai.request(app).post('/login').send(loginMock);
     const token = response.body.token;
 
-    const validToken = jwt.verify(token, secret) as JwtTokenProps;
+    const validToken = jwt.verify(token, secret) as jwt.JwtPayload;
 
     expect(response.status).to.be.equal(200);
     expect(response.body).to.have.property('token');
@@ -38,7 +36,6 @@ describe('tests for route /login', () => {
 
   it('should return error if password is incorrect', async () => {
     sinon.stub(User, 'findOne').resolves(userMock as any);
-    sinon.stub(bcrypt, 'compare').resolves(false);
 
     const response = await chai.request(app).post('/login').send(incorrectPasswordMock);
 
@@ -47,13 +44,24 @@ describe('tests for route /login', () => {
     expect(response.body).to.be.deep.equal({ message: 'Incorrect email or password' });    
   });
 
-  it('should return error if email/password are missing', async () => {
-    sinon.stub(User, 'findOne').resolves(userMock as any);
+  it('should return user role', async () => {
+    sinon.stub(User, 'findOne').resolves(userMock as User);
+    sinon.stub(jwt, 'verify').returns(tokenMock as any);
 
-    const response = await chai.request(app).post('/login').send(noEmailMock);
+    const response = await chai.request(app).get('/login/validate').set('Authorization', 'asdasdasd');
 
-    expect(response.status).to.be.equal(400);
-    expect(response.body).to.have.property('message');
-    expect(response.body).to.be.deep.equal({ message: 'All fields must be filled' });    
+    // expect(response.status).to.be.equal(200);
+    expect(response.body).to.have.property('role');
+    expect(response.body).to.be.deep.equal({ role: 'admin' });    
+  });
+
+  it('should User not found', async () => {
+    sinon.stub(User, 'findOne').resolves(null);
+    sinon.stub(jwt, 'verify').returns(tokenMock as any);
+
+    const response = await chai.request(app).get('/login/validate').set('Authorization', 'asdasdasd');
+
+    expect(response.status).to.be.equal(404);
+    expect(response.body).to.be.deep.equal({ message: 'User not found' });    
   });
 });

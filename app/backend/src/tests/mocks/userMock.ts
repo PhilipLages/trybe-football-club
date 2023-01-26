@@ -23,3 +23,10 @@ export const userMock = {
   email: 'admin@admin.com',
   password: '$2a$08$xi.Hxk1czAO0nZR..B393u10aED0RQ1N3PAEXQ7HxtLjKPEZBu.PW'
 }
+
+export const tokenMock = {
+  id: 1,
+  username: 'Admin',
+  iat: 1674763414, 
+  exp: 1674849814
+}

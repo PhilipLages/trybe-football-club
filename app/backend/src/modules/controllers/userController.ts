@@ -1,9 +1,5 @@
 import { RequestHandler } from 'express';
-import httpStatus from '../../utils/httpStatus';
-import ErrorProps from '../interfaces/errorProps';
 import UserService from '../services/userService';
-
-const { serverError } = httpStatus;
 
 export default class UserController {
   private _service;
@@ -15,32 +11,16 @@ export default class UserController {
   public logIn: RequestHandler = async (req, res) => {
     const login = req.body;
 
-    try {
-      const { status, data } = await this._service.logIn(login);
+    const { status, data } = await this._service.logIn(login);
 
-      return res.status(status).json(data);
-    } catch (error) {
-      console.log(error);
-
-      const { message } = error as ErrorProps;
-
-      return res.status(serverError).json({ message });
-    }
+    return res.status(status).json(data);
   };
 
   public getUser: RequestHandler = async (req, res) => {
     const { user } = req.body;
 
-    try {
-      const { status, data } = await this._service.getUser(user);
+    const { status, data } = await this._service.getUser(user);
 
-      return res.status(status).json(data);
-    } catch (error) {
-      console.log(error);
-
-      const { message } = error as ErrorProps;
-
-      return res.status(serverError).json({ message });
-    }
+    return res.status(status).json(data);
   };
 }
