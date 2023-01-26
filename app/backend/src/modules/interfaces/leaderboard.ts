@@ -1,3 +1,5 @@
+import IStatus from './statusProps';
+
 export default interface ILeaderboard {
   name: string;
   totalPoints: number,
@@ -9,4 +11,8 @@ export default interface ILeaderboard {
   goalsOwn: number,
   goalsBalance: number,
   efficiency: string,
+}
+
+export interface LeaderboardReturn extends IStatus {
+  data: ILeaderboard[]
 }

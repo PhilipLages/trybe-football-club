@@ -4,7 +4,7 @@ import Match from '../../database/models/Match';
 import Team from '../../database/models/Team';
 import httpStatus from '../../utils/httpStatus';
 import { IMatchesByTeam } from '../interfaces/matchProps';
-import ILeaderboard from '../interfaces/leaderboard';
+import { LeaderboardReturn } from '../interfaces/leaderboard';
 
 const { ok } = httpStatus;
 
@@ -17,7 +17,7 @@ export default class LeaderboardService {
     this._modelMatch = Match;
   }
 
-  public getHomeLeaderboard = async () => {
+  public getHomeLeaderboard = async (): Promise<LeaderboardReturn> => {
     const matches = await this._modelTeam.findAll({
       include: [
         {
@@ -36,7 +36,7 @@ export default class LeaderboardService {
     return { status: ok, data };
   };
 
-  public getAwayLeaderboard = async () => {
+  public getAwayLeaderboard = async (): Promise<LeaderboardReturn> => {
     const matches = await this._modelTeam.findAll({
       include: [
         {
@@ -56,8 +56,8 @@ export default class LeaderboardService {
   };
 
   public getFullLeaderboard = async () => {
-    const homeLeaderboard = this.getHomeLeaderboard() as unknown as ILeaderboard[];
-    const awayLeaderboard = this.getAwayLeaderboard() as unknown as ILeaderboard[];
+    const { data: homeLeaderboard } = await this.getHomeLeaderboard();
+    const { data: awayLeaderboard } = await this.getAwayLeaderboard();
 
     const data = createFullLeaderboard(homeLeaderboard, awayLeaderboard);
 
