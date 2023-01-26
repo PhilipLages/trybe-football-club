@@ -111,8 +111,8 @@ export default class Leaderboard {
     goalsBalance: this.getBalance(match) as unknown as number,
     efficiency: this.getEfficiency(match) as unknown as string,
   })).sort((a, b) => b.totalPoints - a.totalPoints
-  || b.totalVictories - a.totalVictories
-  || b.goalsBalance - a.goalsBalance
-  || b.goalsFavor - a.goalsFavor
-  || b.goalsOwn - a.goalsOwn);
+      || b.totalVictories - a.totalVictories
+      || b.goalsBalance - a.goalsBalance
+      || b.goalsFavor - a.goalsFavor
+      || b.goalsOwn - a.goalsOwn);
 }

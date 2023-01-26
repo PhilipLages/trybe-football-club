@@ -1,5 +1,5 @@
-import createFullLeaderboard from '../../utils/fullLeaderboard';
 import Leaderboard from '../../utils/Leaderboard';
+import FullLeaderboard from '../../utils/fullLeaderboard';
 import Match from '../../database/models/Match';
 import Team from '../../database/models/Team';
 import httpStatus from '../../utils/httpStatus';
@@ -59,7 +59,9 @@ export default class LeaderboardService {
     const { data: homeLeaderboard } = await this.getHomeLeaderboard();
     const { data: awayLeaderboard } = await this.getAwayLeaderboard();
 
-    const data = createFullLeaderboard(homeLeaderboard, awayLeaderboard);
+    const leaderboard = new FullLeaderboard(homeLeaderboard, awayLeaderboard);
+
+    const data = leaderboard.createFullLeaderboard();
 
     return { status: ok, data };
   };
