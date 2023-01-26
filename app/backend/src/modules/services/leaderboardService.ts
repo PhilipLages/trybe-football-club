@@ -33,4 +33,23 @@ export default class LeaderboardService {
 
     return { status: ok, data };
   };
+
+  public getAwayLeaderboard = async () => {
+    const matches = await this._modelTeam.findAll({
+      include: [
+        {
+          model: this._modelMatch,
+          as: 'awayMatches',
+          attributes: { exclude: ['id', 'inProgress'] },
+          where: { inProgress: false },
+        },
+      ],
+    }) as unknown as IMatchesByTeam[];
+
+    const leaderboard = new Leaderboard(matches, 'away');
+
+    const data = leaderboard.createLeaderboard();
+
+    return { status: ok, data };
+  };
 }
