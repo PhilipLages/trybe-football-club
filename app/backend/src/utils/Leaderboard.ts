@@ -39,13 +39,20 @@ export default class Leaderboard {
     }
   };
 
-  // const getVictories = ({ homeMatches }: IMatchesByTeam) => homeMatches.
+  private _getVictories = ({ homeMatches, awayMatches }: IMatchesByTeam) => {
+    if (this._where === 'home') {
+      return homeMatches.filter((match) => match.homeTeamGoals > match.awayTeamGoals).length;
+    } if (this._where === 'away') {
+      return awayMatches.filter((match) => match.awayTeamGoals > match.homeTeamGoals).length;
+    }
+  };
 
   public createLeaderboard = () => this._matches.map((match) => (
     {
       name: match.teamName,
       totalPoints: this._getPoints(match),
       totalGames: this._getGames(match),
+      totalVictories: this._getVictories(match),
     }
   ));
 }
