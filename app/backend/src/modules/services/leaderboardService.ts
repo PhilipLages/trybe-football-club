@@ -1,4 +1,4 @@
-import createLeaderboard from '../../utils/homeLeaderboard';
+import Leaderboard from '../../utils/Leaderboard';
 import Match from '../../database/models/Match';
 import Team from '../../database/models/Team';
 import httpStatus from '../../utils/httpStatus';
@@ -27,7 +27,9 @@ export default class LeaderboardService {
       ],
     }) as unknown as IMatchesByTeam[];
 
-    const data = createLeaderboard(matches);
+    const leaderboard = new Leaderboard(matches, 'home');
+
+    const data = leaderboard.createLeaderboard();
 
     return { status: ok, data };
   };
