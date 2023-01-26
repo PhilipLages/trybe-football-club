@@ -50,7 +50,7 @@ describe('tests for route /login', () => {
 
     const response = await chai.request(app).get('/login/validate').set('Authorization', 'asdasdasd');
 
-    // expect(response.status).to.be.equal(200);
+    expect(response.status).to.be.equal(200);
     expect(response.body).to.have.property('role');
     expect(response.body).to.be.deep.equal({ role: 'admin' });    
   });

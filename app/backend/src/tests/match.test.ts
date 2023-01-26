@@ -7,11 +7,14 @@ import chaiHttp = require('chai-http');
 import { app } from '../app';
 import matchesMock from './mocks/matchMocks';
 import Match from '../database/models/Match';
-import { newMatchMock, newMatchRequest } from './mocks/newMatchMock';
-import User from '../database/models/User';
-import { loginMock, userMock } from './mocks/userMock';
-import { secret } from '../utils/jwt';
-import JwtTokenProps from '../modules/interfaces/jwtTokenProps';
+import { 
+  equalTeamsRequest,
+  invalidTeamRequest, 
+  newMatchMock, 
+  newMatchRequest 
+} from './mocks/newMatchMock';
+import { tokenMock } from './mocks/userMock';
+
 
 chai.use(chaiHttp);
 
@@ -29,21 +32,39 @@ describe('tests for route /matches', () => {
     expect(response.body).to.be.deep.equal(matchesMock);
   });
 
-  // it('should create a new match', async () => {
-  //   sinon.stub(Match, 'create').resolves(newMatchMock as any);
-  //   sinon.stub(User, 'findOne').resolves(userMock as any);
+  it('should create a new match', async () => {
+    sinon.stub(Match, 'create').resolves(newMatchMock as Match);
+    sinon.stub(jwt, 'verify').returns(tokenMock as any);
 
-  //   const responseLogin = await chai.request(app).post('/login').send(loginMock);    
+    const response = await chai.request(app).post('/matches')
+      .send(newMatchRequest).set('Authorization', 'huashusahu');
     
-  //   const token = responseLogin.body.token;
-    
-  //   const validToken = jwt.verify(token, secret) as JwtTokenProps;
+    expect(response.status).to.be.equal(201);
+    expect(response.body).to.be.deep.equal(newMatchMock);
+  });
 
-  //   const response = await chai.request(app).post('/matches').send(newMatchRequest);
+  it('should return not found', async () => {
+    sinon.stub(Match, 'create').resolves(newMatchMock as Match);
+    sinon.stub(jwt, 'verify').returns(tokenMock as any);
+
+    const response = await chai.request(app).post('/matches')
+      .send(invalidTeamRequest).set('Authorization', 'huashusahu');
     
-  //   expect(validToken.username).to.be.equal('Admin');
-  //   expect(response.status).to.be.equal(201);
-  //   expect(response.body).to.be.deep.equal(newMatchMock);
+    expect(response.status).to.be.equal(404);
+    expect(response.body).to.be.deep.equal({ message: 'There is no team with such id!' });
+  });
+
+  // it('should return invalid, if request for two equal teams', async () => {
+  //   sinon.stub(Match, 'create').resolves(newMatchMock as Match);
+  //   sinon.stub(jwt, 'verify').returns(tokenMock as any);
+
+  //   const response = await chai.request(app).post('/matches')
+  //     .send(equalTeamsRequest).set('Authorization', 'huashusahu');
+    
+  //   expect(response.status).to.be.equal(422);
+  //   expect(response.body).to.be.deep.equal({ 
+  //     message: 'It is not possible to create a match with two equal teams' 
+  //   });
   // });
 
   it('should finish a match in progress', async () => {
