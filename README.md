@@ -3,7 +3,7 @@
 
 ## Introduction
 
-This API provides information about soccer matches and their ratings for Trybe Football Club. The front-end was provided by Trybe. The API is built with Docker, MySQL, Sequelize, Typescript, NodeJS and follows POO (Programming Oriented Objects) and SOLID principles. The front-end is provided by [Trybe](https://www.betrybe.com/).
+This API provides information about soccer matches and their ratings for the brazilian teams. The API is built with Docker, MySQL, Sequelize, Typescript, NodeJS and follows POO (Programming Oriented Objects) and SOLID principles. The front-end is provided by [Trybe](https://www.betrybe.com/).
 
 
 ## Endpoints
