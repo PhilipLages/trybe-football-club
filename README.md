@@ -1,9 +1,11 @@
 
 # Trybe Football Club REST API
 
-## Introduction
+## Overview
 
-This API provides information about soccer matches and their ratings for the brazilian teams. The API is built with Docker, MySQL, Sequelize, Typescript, NodeJS and follows POO (Programming Oriented Objects) and SOLID principles. The front-end is provided by [Trybe](https://www.betrybe.com/).
+This REST API was developed as part of the Back-End module of [Trybe](https://www.betrybe.com/)'s Web Development course, providing a comprehensive solution for managing soccer matches and championship standings. The API is built using Node.js, a powerful and efficient server-side JavaScript platform, and makes use of modern technologies such as Docker, MySQL, Sequelize ORM, Typescript, and follows POO and SOLID principles to ensure high quality and maintainable code. The front-end is provided by Trybe.
+
+In addition, the API implements a secure authentication system using JSON Web Tokens (JWT), with the /login endpoint providing a POST method for logging in and returning a token that can be used to authenticate subsequent API requests.
 
 
 ## Endpoints
@@ -53,6 +55,7 @@ This API provides information about soccer matches and their ratings for the bra
 -   **Description**
     
     This endpoint returns an array of matches and can be filtered by in-progress or finished matches. The returned data will be in the format:
+    <details>
 
     ```json
     [
@@ -100,6 +103,7 @@ This API provides information about soccer matches and their ratings for the bra
 -   **Description**
     
     This endpoint creates a new soccer match based on the information provided in the request body. The request body must be in the following format:
+    <details>
 
     ```json
     {
@@ -112,6 +116,7 @@ This API provides information about soccer matches and their ratings for the bra
 - **Response**
 
   The endpoint will return a JSON object with the following properties:
+  <details>
 
     ```json
     {
@@ -189,6 +194,7 @@ This API provides information about soccer matches and their ratings for the bra
 -   **Response**
     
     The API will return a JSON array of objects, where each object represents a team. A example will look like this:
+    <details>
 
     ```json
     [
@@ -258,6 +264,8 @@ This API provides information about soccer matches and their ratings for the bra
 -   **Response**
     
     The API will return a JSON array of objects, where each object represents a team and its standings in the championship. The response will look like this:
+    <details>
+
     ```json
     [
       {
