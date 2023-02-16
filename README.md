@@ -1,6 +1,28 @@
 
 # Trybe Football Club REST API
 
+Project developed during the studies of the Back-End module of [Trybe](https://www.betrybe.com/)'s Full-Stack Web Development Course.
+
+## Table of Contents
+
+-   [Technologies Used](#technologies-used)
+-   [Overview](#overview)
+-   [Endpoints](#endpoints)
+-   [Running the Application Locally](#running-the-application-locally)
+-   [Conclusion](#conclusion)
+
+## Technologies Used
+
+-   Node.js
+-   TypeScript
+-   MySQL
+-   Sequelize
+-   Docker 
+-   Jest
+-   Mocha
+-   Chai
+-   Sinon
+
 ## Overview
 
 This REST API was developed as part of the Back-End module of [Trybe](https://www.betrybe.com/)'s Web Development course, providing a comprehensive solution for managing soccer matches and championship standings. The API is built using Node.js, a powerful and efficient server-side JavaScript platform, and makes use of modern technologies such as Docker, MySQL, Sequelize ORM, Typescript, and follows POO and SOLID principles to ensure high quality and maintainable code. The front-end is provided by Trybe.
